@@ -9,7 +9,8 @@
 import UIKit
 
 class RecipeListViewController: UITableViewController {
-
+    var recipes = ["test1", "test2", "Spaghetti"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -20,6 +21,20 @@ class RecipeListViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return recipes.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeItem", for: indexPath)
+        
+        let recipe = recipes[indexPath.row]
+        
+        let label = cell.viewWithTag(1000) as! UILabel
+        
+        label.text = recipe
+        
+        return cell
+    }
 }
 
