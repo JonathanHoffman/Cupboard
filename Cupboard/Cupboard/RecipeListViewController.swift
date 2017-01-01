@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  RecipeListViewController.swift
 //  Cupboard
 //
 //  Created by Jonathan Hoffman on 1/1/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class RecipeListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
