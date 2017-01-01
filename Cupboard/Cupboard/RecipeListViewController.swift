@@ -10,10 +10,18 @@ import UIKit
 
 class RecipeListViewController: UITableViewController {
     var recipes = ["test1", "test2", "Spaghetti"]
+    var ingredients = ["noodles", "cheese"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        let header = tableView.tableHeaderView
+        // Capitalize the ingredients
+        let CapitalizedIngredients = ingredients.map({ $0.capitalized })
+        // Header should be UIView with a tagged UILabel
+        if let ingredientsLabel = header?.viewWithTag(1001) as? UILabel {
+            ingredientsLabel.text = CapitalizedIngredients.joined(separator: ", ")
+        }
     }
 
     override func didReceiveMemoryWarning() {
