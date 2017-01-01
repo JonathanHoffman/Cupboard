@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ebM-yE-H0E">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Jl5-Wu-sxy">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,7 +9,23 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Recipe List View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="krK-ei-nEz">
+            <objects>
+                <navigationController id="Jl5-Wu-sxy" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yn6-qf-8AI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="ebM-yE-H0E" kind="relationship" relationship="rootViewController" id="Apv-Hr-YaG"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pkT-vY-MuA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-815" y="134"/>
+        </scene>
+        <!--Recipes-->
         <scene sceneID="adp-Ne-PcJ">
             <objects>
                 <tableViewController id="ebM-yE-H0E" customClass="RecipeListViewController" customModule="Cupboard" customModuleProvider="target" sceneMemberID="viewController">
@@ -32,6 +48,7 @@
                             <outlet property="delegate" destination="ebM-yE-H0E" id="EcN-XH-EHC"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Recipes" id="JMK-6Z-rOl"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bYG-OJ-VyD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
