@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EnterIngredientsTableViewController: UITableViewController {
+class EnterIngredientsTableViewController: UITableViewController, UITextFieldDelegate {
     var ingredients = [String]()
 
     override func viewDidLoad() {
@@ -47,15 +47,48 @@ class EnterIngredientsTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "IngredientEntry", for: indexPath)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "IngredientItem", for: indexPath)
+            let cell = makeIngredientCell(for: tableView)
             //Get the Ingredient Item label and update its text
-            let label = cell.viewWithTag(1000) as! UILabel
-            label.text = ingredients[indexPath.row]
+            cell.textLabel?.text = ingredients[indexPath.row]
             
             return cell
         }
     }
-
+    
+    /*
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        // More Ingredient validation could go here.
+    } 
+    */
+    
+    // Tapping Done on the ingredient entry keyboard goes here
+    @IBAction func addIngredientFromTextField() {
+        // IndexPath of the entry cell
+        let indexPath = IndexPath(row: 0, section: 0)
+        let cell = tableView.cellForRow(at: indexPath)
+        let textField = cell?.viewWithTag(1000) as! UITextField
+        // Update both the data model and the tableView
+        if let ingredient = textField.text {
+            let indexPath = IndexPath(row: ingredients.count, section: 1)
+            ingredients.append(ingredient)
+            self.tableView.insertRows(at: [indexPath], with: .automatic)
+            textField.text = ""
+        }
+    }
+    
+    // Return a default reusable cell for the ingredients list
+    func makeIngredientCell(for tableView: UITableView) -> UITableViewCell {
+        let cellIdentifier = "IngredientCell"
+        // First, check to see if we have a cell lying around that we can re-use.
+        if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
+            return cell
+        } else {
+            // if we are fresh out of cells, lets whip up a new one.
+            return UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+        }
+    }
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
