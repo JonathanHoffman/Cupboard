@@ -14,6 +14,7 @@
 		8B0C3DD71E1990E600EC3D7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B0C3DD51E1990E600EC3D7D /* LaunchScreen.storyboard */; };
 		8B0C3DE21E1990E600EC3D7D /* CupboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0C3DE11E1990E600EC3D7D /* CupboardTests.swift */; };
 		8B0C3DED1E1990E600EC3D7D /* CupboardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0C3DEC1E1990E600EC3D7D /* CupboardUITests.swift */; };
+		8B0C3DFB1E19FD8600EC3D7D /* EnterIngredientsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0C3DFA1E19FD8600EC3D7D /* EnterIngredientsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		8B0C3DE81E1990E600EC3D7D /* CupboardUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CupboardUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0C3DEC1E1990E600EC3D7D /* CupboardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CupboardUITests.swift; sourceTree = "<group>"; };
 		8B0C3DEE1E1990E600EC3D7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B0C3DFA1E19FD8600EC3D7D /* EnterIngredientsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterIngredientsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			children = (
 				8B0C3DCC1E1990E600EC3D7D /* AppDelegate.swift */,
 				8B0C3DCE1E1990E600EC3D7D /* RecipeListViewController.swift */,
+				8B0C3DFA1E19FD8600EC3D7D /* EnterIngredientsViewController.swift */,
 				8B0C3DD01E1990E600EC3D7D /* Main.storyboard */,
 				8B0C3DD31E1990E600EC3D7D /* Assets.xcassets */,
 				8B0C3DD51E1990E600EC3D7D /* LaunchScreen.storyboard */,
@@ -259,6 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B0C3DFB1E19FD8600EC3D7D /* EnterIngredientsViewController.swift in Sources */,
 				8B0C3DCF1E1990E600EC3D7D /* RecipeListViewController.swift in Sources */,
 				8B0C3DCD1E1990E600EC3D7D /* AppDelegate.swift in Sources */,
 			);
@@ -503,6 +507,7 @@
 				8B0C3DF31E1990E600EC3D7D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8B0C3DF41E1990E600EC3D7D /* Build configuration list for PBXNativeTarget "CupboardTests" */ = {
 			isa = XCConfigurationList;
@@ -511,6 +516,7 @@
 				8B0C3DF61E1990E600EC3D7D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8B0C3DF71E1990E600EC3D7D /* Build configuration list for PBXNativeTarget "CupboardUITests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +525,7 @@
 				8B0C3DF91E1990E600EC3D7D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
