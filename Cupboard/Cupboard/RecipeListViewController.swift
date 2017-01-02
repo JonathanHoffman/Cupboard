@@ -64,7 +64,7 @@ class RecipeListViewController: UITableViewController {
     
     func searchIngredients() {
         let session = URLSession.shared
-        let apiString = "http://recipepuppy.com/api/?i=noodles,cheese"
+        let apiString = makeAPIString(forIngredients: ingredients)
         let apiURL: URL = NSURL(string: apiString)! as URL
         let request = NSMutableURLRequest(url: apiURL)
         request.httpMethod = "GET"
@@ -84,6 +84,13 @@ class RecipeListViewController: UITableViewController {
         }
         task.resume()
     }
+    
+    func makeAPIString(forIngredients ingredients: [String]) -> String {
+        var stringAPI = "http://recipepuppy.com/api/"
+        stringAPI.append("?i=") // ingredients list token
+        stringAPI.append(ingredients.joined(separator: ","))
+        return stringAPI
+    }
 }
 
 // MARK: - EnterIngredientViewControllerDelegate
@@ -98,6 +105,8 @@ extension RecipeListViewController: EnterIngredientsViewControllerDelegate {
         // This list will be short and in most cases totally different from the previous time.
         // Therefore, I've opted to have this delegate method to replace it each time.
         self.ingredients = ingredients
+        // Search for new ingredients
+        searchIngredients()
         // Update the table view.
         // Again, the data should be manageable to do this in bulk.
         tableView.reloadData()
