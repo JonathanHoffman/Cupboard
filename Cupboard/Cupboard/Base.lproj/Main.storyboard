@@ -105,7 +105,18 @@
                             <outlet property="delegate" destination="LUd-b7-CDz" id="FA9-2F-VBv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Enter Ingredients" id="xNY-l8-vKa"/>
+                    <navigationItem key="navigationItem" title="Enter Ingredients" id="xNY-l8-vKa">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="MdZ-oC-sl0">
+                            <connections>
+                                <action selector="cancel" destination="LUd-b7-CDz" id="5pD-uQ-54B"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="VuG-39-5QM">
+                            <connections>
+                                <action selector="done" destination="LUd-b7-CDz" id="GNX-L1-ycY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qdj-f4-oMU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

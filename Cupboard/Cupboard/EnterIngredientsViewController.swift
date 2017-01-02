@@ -9,11 +9,14 @@
 import UIKit
 
 protocol EnterIngredientsViewControllerDelegate: class {
+    func enterIngredientsViewControllerDidCancel(_ controller: EnterIngredientsViewController)
     func enterIngredientsViewController(_ controller: EnterIngredientsViewController, didFinishEntering ingredients: [String])
 }
 
 class EnterIngredientsViewController: UITableViewController, UITextFieldDelegate {
     var ingredients = [String]()
+    
+    weak var delegate: RecipeListViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,6 +81,14 @@ class EnterIngredientsViewController: UITableViewController, UITextFieldDelegate
             self.tableView.insertRows(at: [indexPath], with: .automatic)
             textField.text = ""
         }
+    }
+    
+    @IBAction func cancel() {
+        delegate?.enterIngredientsViewControllerDidCancel(self)
+    }
+    
+    @IBAction func done() {
+        delegate?.enterIngredientsViewController(self, didFinishEntering: ingredients)
     }
     
     // Return a default reusable cell for the ingredients list
