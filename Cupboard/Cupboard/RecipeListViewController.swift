@@ -76,10 +76,13 @@ class RecipeListViewController: UITableViewController {
                 return
             } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
                 
-                print("On main thread? " +  (Thread.current.isMainThread ? "Yes" : "No"))
-                
-                let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-                print(dataString ?? "No data")
+                if let data = data {
+                    let json = self.parse(jsonFrom: data)
+                    print(json!)
+                    self.recipes = self.parse(recipesFrom: json)
+                } else {
+                    print("data error")
+                }
             }
         }
         task.resume()
@@ -90,6 +93,38 @@ class RecipeListViewController: UITableViewController {
         stringAPI.append("?i=") // ingredients list token
         stringAPI.append(ingredients.joined(separator: ","))
         return stringAPI
+    }
+    
+    func parse(jsonFrom data: Data) -> [String: Any]? {
+        do {
+            return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        } catch {
+            print("JSON Error: \(error)")
+            return nil
+        }
+    }
+    
+    func parse(recipesFrom json: [String : Any]?) -> [String] {
+        // The JSON object will have a results dict full of recipes.
+        guard let recipesArray = json?["results"] as? [Any] else {
+            print("Expected 'results' array")
+            return []
+        }
+        // Store new recipes in here.
+        var recipeNames = [String]()
+        // Process each recipe in the array
+        for recipeDict in recipesArray {
+            // process valid dicts only
+            if let recipeDict = recipeDict as? [String: Any] {
+                if var recipeName = recipeDict["title"] as? String {
+                    recipeName = recipeName.replacingOccurrences(of: "\n", with: "")
+                    recipeNames.append(recipeName)
+                } else {
+                    print("Recipe title not valid")
+                }
+            }
+        }
+        return recipeNames
     }
 }
 
