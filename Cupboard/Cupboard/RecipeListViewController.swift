@@ -11,6 +11,10 @@ import UIKit
 class RecipeListViewController: UITableViewController {
     var recipes = ["Lasagna", "Mac and Cheese", "Spaghetti"]
     var ingredients = ["noodles", "cheese"]
+    // Used to indicate that the table view data is loading
+    var isLoading = true
+    // View controller should be aware of the session data task. Used to prevent multiple searches from occuring simultaneously 
+    var dataTask: URLSessionDataTask?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,10 +29,19 @@ class RecipeListViewController: UITableViewController {
 // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recipes.count
+        if isLoading {
+            return 1
+        } else {
+            return recipes.count
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // if we are loading data, show this instead
+        guard !isLoading else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath)
+            return cell
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeItem", for: indexPath)
         
         let recipe = recipes[indexPath.row]
@@ -41,7 +54,8 @@ class RecipeListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
+        // Header is not displayed when loading
+        if section == 0, !isLoading {
             // Capitalize the ingredients
             let capitalizedIngredients = ingredients.map({ $0.capitalized })
             // Header should be UIView with a tagged UILabel
@@ -63,14 +77,19 @@ class RecipeListViewController: UITableViewController {
     }
     
     func searchIngredients() {
+        //prepare the URL session and request
         let session = URLSession.shared
         let apiString = makeAPIString(forIngredients: ingredients)
         let apiURL: URL = NSURL(string: apiString)! as URL
         let request = NSMutableURLRequest(url: apiURL)
         request.httpMethod = "GET"
         request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-        
-        let task = session.dataTask(with: request as URLRequest) {data, response, error in
+        //Indicate that data is loading
+        self.dataTask?.cancel()
+        isLoading = true
+        tableView.reloadData()
+        // start the data task
+        let dataTask = session.dataTask(with: request as URLRequest) {data, response, error in
             
             if let error = error as? NSError, error.code == -999 {
                 return
@@ -80,12 +99,23 @@ class RecipeListViewController: UITableViewController {
                     let json = self.parse(jsonFrom: data)
                     print(json!)
                     self.recipes = self.parse(recipesFrom: json)
+                    // add an async dispatch to display the new data once this task is done
+                    DispatchQueue.main.async {
+                        self.isLoading = false
+                        self.tableView.reloadData()
+                    }
                 } else {
                     print("data error")
                 }
+                // Queue up a response if this dataTask fails
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    self.tableView.reloadData()
+                    print("Network error")
+                }
             }
         }
-        task.resume()
+        dataTask.resume()
     }
     
     func makeAPIString(forIngredients ingredients: [String]) -> String {
