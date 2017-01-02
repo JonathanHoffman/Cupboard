@@ -1,5 +1,5 @@
 //
-//  EnterIngredientsTableViewController.swift
+//  EnterIngredientsViewController.swift
 //  Cupboard
 //
 //  Created by Jonathan Hoffman on 1/1/17.
@@ -8,7 +8,11 @@
 
 import UIKit
 
-class EnterIngredientsTableViewController: UITableViewController, UITextFieldDelegate {
+protocol EnterIngredientsViewControllerDelegate: class {
+    func enterIngredientsViewController(_ controller: EnterIngredientsViewController, didFinishEntering ingredients: [String])
+}
+
+class EnterIngredientsViewController: UITableViewController, UITextFieldDelegate {
     var ingredients = [String]()
 
     override func viewDidLoad() {

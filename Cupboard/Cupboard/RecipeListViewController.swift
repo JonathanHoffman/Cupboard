@@ -51,7 +51,7 @@ class RecipeListViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EnterIngredients" {
             let navigationController = segue.destination as! UINavigationController
-            let controller = navigationController.topViewController as! EnterIngredientsTableViewController
+            let controller = navigationController.topViewController as! EnterIngredientsViewController
             controller.ingredients = ingredients
         }
     }
