@@ -25,23 +25,32 @@ class RecipeDetailViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return 1
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeInfo", for: indexPath)
 
-        // Configure the cell...
+        switch indexPath.section {
+        case 0:
+            cell.textLabel!.text = recipe.URL
+        case 1:
+            cell.textLabel!.text = recipe.image
+        case 2:
+            cell.textLabel!.text = recipe.ingredients
+        default:
+            cell.textLabel!.text = recipe.name
+        }
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

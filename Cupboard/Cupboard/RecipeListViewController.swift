@@ -190,7 +190,7 @@ class RecipeListViewController: UITableViewController {
             // process valid dicts only
             if let recipeDict = recipeDict as? [String: Any] {
                 newRecipe.name = recipeDict["title"] as! String
-                newRecipe.name = newRecipe.name.replacingOccurrences(of: "/n", with: "")
+                newRecipe.name = newRecipe.name.replacingOccurrences(of: "\n", with: "")
                 newRecipe.image = recipeDict["thumbnail"] as! String
                 newRecipe.URL = recipeDict["href"] as! String
                 newRecipe.ingredients = recipeDict["ingredients"] as!  String
