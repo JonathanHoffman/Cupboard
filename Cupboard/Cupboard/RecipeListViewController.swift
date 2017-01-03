@@ -81,6 +81,21 @@ class RecipeListViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        // Only allow selections when in normal recipe mode
+        guard isLoading == false, recipes.count > 0, ingredients.count > 0 else {
+            return nil
+        }
+        
+        return indexPath
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let recipe = recipes[indexPath.row]
+        // Only recipe cells can be selected, so perform this segue every time
+        performSegue(withIdentifier: "ShowRecipe", sender: recipe)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EnterIngredients" {
             // get the enter ingredient controller
@@ -89,6 +104,9 @@ class RecipeListViewController: UITableViewController {
             // initialize that controller
             controller.delegate = self
             controller.ingredients = ingredients
+        }
+        if segue.identifier == "ShowRecipe" {
+            let controller = segue.destination as! RecipeDetailViewController
         }
     }
     
