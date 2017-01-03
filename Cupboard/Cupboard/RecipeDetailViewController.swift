@@ -30,10 +30,13 @@ class RecipeDetailViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        if section == 2 {
+            return recipe.ingredients.count
+        } else {
+            return 1
+        }
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeInfo", for: indexPath)
 
@@ -43,7 +46,7 @@ class RecipeDetailViewController: UITableViewController {
         case 1:
             cell.textLabel!.text = recipe.image
         case 2:
-            cell.textLabel!.text = recipe.ingredients
+            cell.textLabel!.text = recipe.ingredients[indexPath.row]
         default:
             cell.textLabel!.text = recipe.name
         }
