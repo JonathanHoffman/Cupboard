@@ -16,7 +16,7 @@ class Recipe {
     
     init(fromRecipeDict dict: [String : Any]) {
         let title = dict["title"] as! String
-        name = title.replacingOccurrences(of: "\n", with: "")
+        name = title.trimmingCharacters(in: .whitespacesAndNewlines)
 
         image = dict["thumbnail"] as! String
 
