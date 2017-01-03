@@ -17,8 +17,11 @@ class Recipe {
     init(fromRecipeDict dict: [String : Any]) {
         let title = dict["title"] as! String
         name = title.replacingOccurrences(of: "\n", with: "")
+
         image = dict["thumbnail"] as! String
+
         URL = dict["href"] as! String
+        
         let dictIngredients = dict["ingredients"] as!  String
         ingredients = dictIngredients.components(separatedBy: ", ")
     }
