@@ -9,8 +9,8 @@
 import UIKit
 
 class RecipeListViewController: UITableViewController {
-    var recipes = ["Lasagna", "Mac and Cheese", "Spaghetti"]
-    var ingredients = ["noodles", "cheese"]
+    var recipes = [String]()
+    var ingredients = [String]()
     // Used to indicate that the table view data is loading
     var isLoading = true
     // View controller should be aware of the session data task. Used to prevent multiple searches from occuring simultaneously 
