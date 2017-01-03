@@ -29,7 +29,8 @@ class RecipeListViewController: UITableViewController {
 // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isLoading {
+        // If we don't have any data right now, use 1 row to display a cell.
+        if isLoading || recipes.count == 0 || ingredients.count == 0{
             return 1
         } else {
             return recipes.count
@@ -38,19 +39,34 @@ class RecipeListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // if we are loading data, show this instead
-        guard !isLoading else {
+        if isLoading {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath)
             return cell
+        } else if ingredients.count == 0 {
+            // Let the user know to select some ingredients
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ErrorCell", for: indexPath)
+            let label = cell.viewWithTag(1000) as! UILabel
+            label.text = "Search for some ingredients first!"
+            
+            return cell
+        } else if recipes.count == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ErrorCell", for: indexPath)
+            let label = cell.viewWithTag(1000) as! UILabel
+            label.text = "We couldn't find any recipes with those ingredients."
+            
+            return cell
+        } else {
+        
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeItem", for: indexPath)
+            
+            let recipe = recipes[indexPath.row]
+            
+            let label = cell.viewWithTag(1000) as! UILabel
+            
+            label.text = recipe
+            
+            return cell
         }
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeItem", for: indexPath)
-        
-        let recipe = recipes[indexPath.row]
-        
-        let label = cell.viewWithTag(1000) as! UILabel
-        
-        label.text = recipe
-        
-        return cell
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -80,7 +96,7 @@ class RecipeListViewController: UITableViewController {
         //prepare the URL session and request
         let session = URLSession.shared
         let apiString = makeAPIString(forIngredients: ingredients)
-        let apiURL: URL = NSURL(string: apiString)! as URL
+        let apiURL: URL = URL(string: apiString)! as URL
         let request = NSMutableURLRequest(url: apiURL)
         request.httpMethod = "GET"
         request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
@@ -104,17 +120,21 @@ class RecipeListViewController: UITableViewController {
                         self.isLoading = false
                         self.tableView.reloadData()
                     }
+                    // exit the callback
+                    return
+                    
                 } else {
                     print("data error")
                 }
-                // Queue up a response if this dataTask fails
-                DispatchQueue.main.async {
-                    self.isLoading = false
-                    self.tableView.reloadData()
-                    print("Network error")
-                }
+            }
+            // Queue up a response if this dataTask fails
+            DispatchQueue.main.async {
+                self.isLoading = false
+                self.tableView.reloadData()
+                print("Network error")
             }
         }
+        print("resuming tasks")
         dataTask.resume()
     }
     
@@ -122,6 +142,7 @@ class RecipeListViewController: UITableViewController {
         var stringAPI = "http://recipepuppy.com/api/"
         stringAPI.append("?i=") // ingredients list token
         stringAPI.append(ingredients.joined(separator: ","))
+        stringAPI = stringAPI.replacingOccurrences(of: " ", with: "%20")
         return stringAPI
     }
     
