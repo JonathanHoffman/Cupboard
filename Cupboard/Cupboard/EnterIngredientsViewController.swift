@@ -18,11 +18,6 @@ class EnterIngredientsViewController: UITableViewController, UITextFieldDelegate
     
     weak var delegate: RecipeListViewController?
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -99,11 +94,10 @@ class EnterIngredientsViewController: UITableViewController, UITextFieldDelegate
         }
     }
     
-    // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 
-        // Do not allow editing of the ingredient entry cell
-        if indexPath.section == 0 {
+        // Allow editing of cells in section 1
+        guard indexPath.section == 1 else {
             return false
         }
 
