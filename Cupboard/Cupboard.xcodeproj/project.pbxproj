@@ -16,6 +16,7 @@
 		8B0C3DED1E1990E600EC3D7D /* CupboardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0C3DEC1E1990E600EC3D7D /* CupboardUITests.swift */; };
 		8B0C3DFB1E19FD8600EC3D7D /* EnterIngredientsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0C3DFA1E19FD8600EC3D7D /* EnterIngredientsViewController.swift */; };
 		8B6DDA7D1E1B579E00229EBD /* RecipeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6DDA7C1E1B579E00229EBD /* RecipeDetailViewController.swift */; };
+		8B6DDA7F1E1B5F7C00229EBD /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6DDA7E1E1B5F7C00229EBD /* Recipe.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		8B0C3DEE1E1990E600EC3D7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B0C3DFA1E19FD8600EC3D7D /* EnterIngredientsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterIngredientsViewController.swift; sourceTree = "<group>"; };
 		8B6DDA7C1E1B579E00229EBD /* RecipeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewController.swift; sourceTree = "<group>"; };
+		8B6DDA7E1E1B5F7C00229EBD /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 			children = (
 				8B0C3DCC1E1990E600EC3D7D /* AppDelegate.swift */,
 				8B0C3DCE1E1990E600EC3D7D /* RecipeListViewController.swift */,
+				8B6DDA7E1E1B5F7C00229EBD /* Recipe.swift */,
 				8B0C3DFA1E19FD8600EC3D7D /* EnterIngredientsViewController.swift */,
 				8B0C3DD01E1990E600EC3D7D /* Main.storyboard */,
 				8B6DDA7C1E1B579E00229EBD /* RecipeDetailViewController.swift */,
@@ -269,6 +272,7 @@
 				8B0C3DCF1E1990E600EC3D7D /* RecipeListViewController.swift in Sources */,
 				8B6DDA7D1E1B579E00229EBD /* RecipeDetailViewController.swift in Sources */,
 				8B0C3DCD1E1990E600EC3D7D /* AppDelegate.swift in Sources */,
+				8B6DDA7F1E1B5F7C00229EBD /* Recipe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

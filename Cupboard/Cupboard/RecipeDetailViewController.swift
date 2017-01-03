@@ -9,12 +9,10 @@
 import UIKit
 
 class RecipeDetailViewController: UITableViewController {
-    var recipeName: String?
+    var recipe: Recipe!
     
     override func viewDidLoad() {
-        if let title = recipeName {
-            navigationController?.title = title
-        }
+        self.title = recipe.name
         super.viewDidLoad()
     }
 
