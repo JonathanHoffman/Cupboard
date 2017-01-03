@@ -12,13 +12,20 @@ class RecipeDetailViewController: UITableViewController {
     var recipe: Recipe!
     
     override func viewDidLoad() {
-        self.title = recipe.name
         super.viewDidLoad()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func openURL() {
+        let recipeURL = URL(string: recipe.URL)
+        
+        let application = UIApplication.shared
+        
+        application.openURL(recipeURL!);
     }
 
     // MARK: - Table view data source
@@ -41,10 +48,13 @@ class RecipeDetailViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeInfo", for: indexPath)
 
         switch indexPath.section {
-        case 0:
-            cell.textLabel!.text = recipe.URL
-        case 1:
-            cell.textLabel!.text = recipe.image
+        case 0: // Name Cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeInfo", for: indexPath)
+            cell.textLabel!.text = recipe.name
+        case 1: // URL Cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LinkCell", for: indexPath)
+            let button = cell.viewWithTag(1000) as! UIButton
+            button.setTitle(recipe.URL, for: .normal)
         case 2:
             cell.textLabel!.text = recipe.ingredients[indexPath.row]
         default:
@@ -54,6 +64,9 @@ class RecipeDetailViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        return nil
+    }
 
     /*
     // Override to support conditional editing of the table view.
