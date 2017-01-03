@@ -12,11 +12,15 @@ class RecipeDetailViewController: UITableViewController {
     var recipe: Recipe!
     
     @IBAction func openURL() {
-        let recipeURL = URL(string: recipe.URL)
+        guard let recipeURL = URL(string: recipe.URL) else {
+            print("Error: recipe.URL cannot be converted to type URL")
+            print("recipe.URL: \(recipe.URL)")
+            return
+        }
         
         let application = UIApplication.shared
         
-        application.openURL(recipeURL!)
+        application.openURL(recipeURL)
     }
 
     // MARK: - Table view data source
