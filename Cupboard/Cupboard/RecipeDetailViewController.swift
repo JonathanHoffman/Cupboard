@@ -10,6 +10,12 @@ import UIKit
 
 class RecipeDetailViewController: UITableViewController {
     var recipe: Recipe!
+
+    enum Sections: Int {
+        case title = 0
+        case link = 1
+        case ingredients = 2
+    }
     
     @IBAction func openURL() {
         guard let recipeURL = URL(string: recipe.URL) else {
@@ -30,11 +36,21 @@ class RecipeDetailViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 2 {
-            return recipe.ingredients.count
+        guard let section = Sections(rawValue: section) else { return 0 }
+        switch section {
+        case .ingredients: return recipe.ingredients.count
+        default: return 1
+        }
+    }
 
-        } else {
-            return 1
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+
+        // section must be in Sections
+        guard let section = Sections(rawValue: section) else { return nil }
+        switch section {
+        case .title: return "Title"
+        case .link: return "Link"
+        case .ingredients: return "Ingredients"
         }
     }
 
