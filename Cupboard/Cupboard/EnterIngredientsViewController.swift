@@ -60,6 +60,9 @@ class EnterIngredientsViewController: UITableViewController, UITextFieldDelegate
     
     // Tapping Done on the ingredient entry keyboard goes here
     @IBAction func addIngredientFromTextField(_ sender: UITextField) {
+        guard let ingredient = sender.text else {
+            return
+        }
 
         // IndexPath of the entry cell
         let point = tableView.convert(CGPoint.zero, from: sender)
@@ -68,12 +71,10 @@ class EnterIngredientsViewController: UITableViewController, UITextFieldDelegate
             let textField = cell?.viewWithTag(1000) as! UITextField
             
             // Update both the data model and the tableView
-            if let ingredient = textField.text {
-                let indexPath = IndexPath(row: ingredients.count, section: 1)
-                ingredients.append(ingredient)
-                self.tableView.insertRows(at: [indexPath], with: .automatic)
-                textField.text = ""
-            }
+            let indexPath = IndexPath(row: ingredients.count, section: 1)
+            ingredients.append(ingredient)
+            self.tableView.insertRows(at: [indexPath], with: .automatic)
+            textField.text = ""
         }
     }
     
