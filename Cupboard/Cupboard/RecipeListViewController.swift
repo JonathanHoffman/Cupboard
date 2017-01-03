@@ -9,16 +9,18 @@
 import UIKit
 
 class RecipeListViewController: UITableViewController {
-    var recipes = [String]()
+    var recipes = [Recipe]()
     var ingredients = [String]()
     // Used to indicate that the table view data is loading
-    var isLoading = true
+    var isLoading = false
     // View controller should be aware of the session data task. Used to prevent multiple searches from occuring simultaneously 
     var dataTask: URLSessionDataTask?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchIngredients()
+        if ingredients.count > 0 {
+            searchIngredients()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,7 +65,7 @@ class RecipeListViewController: UITableViewController {
             
             let label = cell.viewWithTag(1000) as! UILabel
             
-            label.text = recipe
+            label.text = recipe.name
             
             return cell
         }
@@ -81,6 +83,21 @@ class RecipeListViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        // Only allow selections when in normal recipe mode
+        guard isLoading == false, recipes.count > 0, ingredients.count > 0 else {
+            return nil
+        }
+        
+        return indexPath
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let recipe = recipes[indexPath.row]
+        // Only recipe cells can be selected, so perform this segue every time
+        performSegue(withIdentifier: "ShowRecipe", sender: recipe)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EnterIngredients" {
             // get the enter ingredient controller
@@ -89,6 +106,10 @@ class RecipeListViewController: UITableViewController {
             // initialize that controller
             controller.delegate = self
             controller.ingredients = ingredients
+        }
+        if segue.identifier == "ShowRecipe" {
+            let controller = segue.destination as! RecipeDetailViewController
+            controller.recipe = sender as! Recipe
         }
     }
     
@@ -155,27 +176,23 @@ class RecipeListViewController: UITableViewController {
         }
     }
     
-    func parse(recipesFrom json: [String : Any]?) -> [String] {
+    func parse(recipesFrom json: [String : Any]?) -> [Recipe] {
         // The JSON object will have a results dict full of recipes.
         guard let recipesArray = json?["results"] as? [Any] else {
             print("Expected 'results' array")
             return []
         }
         // Store new recipes in here.
-        var recipeNames = [String]()
+        var newRecipes = [Recipe]()
         // Process each recipe in the array
         for recipeDict in recipesArray {
             // process valid dicts only
             if let recipeDict = recipeDict as? [String: Any] {
-                if var recipeName = recipeDict["title"] as? String {
-                    recipeName = recipeName.replacingOccurrences(of: "\n", with: "")
-                    recipeNames.append(recipeName)
-                } else {
-                    print("Recipe title not valid")
-                }
+                let newRecipe = Recipe(fromRecipeDict: recipeDict)
+                newRecipes.append(newRecipe)
             }
         }
-        return recipeNames
+        return newRecipes
     }
 }
 
