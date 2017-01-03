@@ -21,8 +21,9 @@ class Recipe {
         image = dict["thumbnail"] as! String
 
         URL = dict["href"] as! String
-        
+
         let dictIngredients = dict["ingredients"] as!  String
-        ingredients = dictIngredients.components(separatedBy: ", ")
+        ingredients = dictIngredients.components(separatedBy: ",")
+        ingredients = ingredients.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
     }
 }
