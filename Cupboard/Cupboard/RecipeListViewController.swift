@@ -220,9 +220,10 @@ class RecipeListViewController: UITableViewController {
             // process valid dicts only
             if let recipeDict = recipeDict as? [String: Any] {
 
-                // Use fromRecipeDict init to unpack dict
-                let newRecipe = Recipe(fromRecipeDict: recipeDict)
-                newRecipes.append(newRecipe)
+                // Use fromRecipeDict init to unpack dict. If it succeeds, append to newRecipes
+                if let newRecipe = Recipe(fromRecipeDict: recipeDict) {
+                    newRecipes.append(newRecipe)
+                }
             }
         }
 
