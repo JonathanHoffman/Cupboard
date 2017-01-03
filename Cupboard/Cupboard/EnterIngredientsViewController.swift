@@ -53,6 +53,10 @@ class EnterIngredientsViewController: UITableViewController, UITextFieldDelegate
             return cell
         }
     }
+
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        return nil
+    }
     
     // Tapping Done on the ingredient entry keyboard goes here
     @IBAction func addIngredientFromTextField() {
